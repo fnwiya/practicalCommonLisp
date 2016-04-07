@@ -91,3 +91,16 @@
   `#'(lambda (cd) (and ,@(make-comparisons-list clauses))))
 
 ;; Chapter 5
+(defun verbose-sum (x y)
+  "Sum two numbers"
+  (format t "Summing ~d and ~d.~%" x y)
+  (+ x y))
+
+(defun foo-sup (a b &optional (c 3 c-supplied-p))
+  (list a b c c-supplied-p))
+
+(defun plot (fn min max step)
+  (loop for i from min to max by step do
+       (loop repeat (funcall fn i) do (format t "*"))
+       (format t "~%")))
+
