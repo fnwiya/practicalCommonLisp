@@ -104,3 +104,14 @@
        (loop repeat (funcall fn i) do (format t "*"))
        (format t "~%")))
 
+;; Chapter 7
+;; (defmacro when (condition &rest body)
+;;   `(if ,condition (progn ,@body)))
+
+(defun fibo (max)
+  (do ((n 0 (1+ n))
+       (cur 0 next)
+       (next 1 (+ cur next)))
+      ((= max n) cur)))
+
+
