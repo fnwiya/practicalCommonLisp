@@ -114,4 +114,34 @@
        (next 1 (+ cur next)))
       ((= max n) cur)))
 
+;; Chapter 8
+(defun primep (numbers)
+  (when (> number 1)
+    (loop for fac from 2 to (isqrt number) never (zerop (mod number fac)))))
+
+(defun next-prime (number)
+  (loop for n from number when (primep n) return n))
+
+;; (defmacro do-primes (var-and-range &rest body)
+;;   (let ((var (first var-and-range))
+;;         (start (second var-and-range))
+;;         (end (third var-and-range)))
+;;     `(do ((,var (next-prime ,start) (next-prime (1+ ,var))))
+;;          ((> ,var ,end))
+;;        ,@body)))
+
+;; (defmacro do-primes ((var start end) &body body)
+;;   `(do ((,var (next-prime ,start) (next-prime (1+ ,var))))
+;;        ((> ,var ,end))
+;;      ,@body))
+
+(defmacro do-primes ((var start end) &body body)
+  `(do ((ending-value ,end)
+        (,var (next-prime ,start) (next-prime (1+ ,var))))
+       ((> ,var ending-value))
+     ,@body))
+
+(defmacro with-gensyms ((&rest names) &body body)
+  `(let ,(loop for n in names collect `(,n (gensym)))
+     ,@body))
 
