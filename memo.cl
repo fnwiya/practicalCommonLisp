@@ -145,3 +145,30 @@
   `(let ,(loop for n in names collect `(,n (gensym)))
      ,@body))
 
+;; Chapter 9
+;; (defun report-result (result form)
+;;   (format t "~:[FAIL~;pass~] ... ~a~%" result form))
+
+;; (defmacro check (&body forms)
+;;   `(progn
+;;      ,@(loop for f in forms collect `(report-result ,f ',f))))
+
+(defun report-result (result form)
+  (format t "~:[FAIL~;pass~] ... ~a~%" result form)
+  result)
+
+(defmacro combine-results (&body forms)
+  (with-gensyms (result)
+    `(let ((,result t))
+       ,@(loop for f in forms collect `(unless ,f (setf ,result nil)))
+       ,result)))
+
+(defmacro check (&body forms)
+  `(combine-results
+    ,@(loop for f in forms collect `(report-result ,f ',f))))
+
+(defmacro deftest (name parameters &body body)
+  `(defun ,name ,parameters
+     (let ((*test-name* ',name))
+       ,@body)))
+
