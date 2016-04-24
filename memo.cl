@@ -172,3 +172,7 @@
      (let ((*test-name* ',name))
        ,@body)))
 
+;; Chapter 11
+(make-array 5 :initial-element nil)
+(make-array 5 :fill-pointer 0)
+
